@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Details & Feedback</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #346beb;
+            --primary-dark: #1a4cc7;
+            --secondary-color: #f8f9fa;
+            --text-color: #333;
+            --light-gray: #e9ecef;
+            --medium-gray: #adb5bd;
+            --dark-gray: #6c757d;
+            --success: #28a745;
+            --danger: #dc3545;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 15px 0;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            text-align: center;
+            color: var(--primary-color);
+        }
+
+        .event-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        }
+
+        .event-info {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .event-info h2 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .event-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .event-meta p {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .event-meta i {
+            color: var(--primary-color);
+        }
+
+        .event-description {
+            line-height: 1.8;
+            margin-top: 15px;
+        }
+
+        .event-gallery {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .gallery-img {
+            width: 100%;
+            height: 200px;
+            background-color: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .gallery-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .feedback-section {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        }
+
+        .feedback-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .overall-rating {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 18px;
+        }
+
+        .stars {
+            color: #ffc107;
+            font-size: 20px;
+        }
+
+        .feedback-form {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: var(--secondary-color);
+            border-radius: 5px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid var(--medium-gray);
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .rating-input {
+            display: flex;
+            gap: 10px;
+            font-size: 24px;
+        }
+
+        .rating-input i {
+            cursor: pointer;
+            color: var(--medium-gray);
+        }
+
+        .rating-input i.active {
+            color: #ffc107;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .file-input-label {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: var(--light-gray);
+            color: var(--dark-gray);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .file-input-label:hover {
+            background-color: var(--medium-gray);
+            color: white;
+        }
+
+        .image-preview {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .image-preview-item {
+            width: 100px;
+            height: 100px;
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .image-preview-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .remove-image {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: rgba(255,255,255,0.7);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .feedback-list {
+            margin-top: 40px;
+        }
+
+        .feedback-item {
+            border-bottom: 1px solid var(--light-gray);
+            padding: 20px 0;
+            position: relative;
+        }
+
+        .feedback-item:last-child {
+            border-bottom: none;
+        }
+
+        .feedback-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .user-info {
+            font-weight: 500;
+        }
+
+        .feedback-rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .feedback-content {
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        .feedback-images {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .feedback-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .feedback-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .feedback-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            color: var(--dark-gray);
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .action-btn:hover {
+            color: var(--primary-color);
+        }
+
+        .action-btn.delete:hover {
+            color: var(--danger);
+        }
+
+        .action-btn.edit:hover {
+            color: var(--success);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Modal styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: translateY(-20px);
+            transition: all 0.3s;
+        }
+
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--dark-gray);
+        }
+
+        @media (max-width: 768px) {
+            .event-details {
+                grid-template-columns: 1fr;
+            }
+
+            .event-gallery {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 id="event-title">Event Details</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="event-details">
+            <div class="event-info">
+                <div>
+                    <h2>Event Information</h2>
+                    <div class="event-meta">
+                        <p><i class="far fa-calendar-alt"></i> <span id="event-date">April 20, 2025</span></p>
+                        <p><i class="fas fa-map-marker-alt"></i> <span id="event-location">Virtual Event (Zoom)</span></p>
+                        <p><i class="fas fa-users"></i> <span id="event-organizer">IT Department</span></p>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3>Description</h3>
+                    <p class="event-description" id="event-description">
+                        Present your research projects to faculty, peers, and industry professionals. A virtual event open to all IT undergraduates engaged in research. Registration required to present.
+                    </p>
+                </div>
+                
+                <div>
+                    <h3>Additional Information</h3>
+                    <ul class="event-additional-info" id="event-additional-info">
+                        <li>Submit abstracts by April 1, 2025</li>
+                        <li>Each presentation will be 15 minutes with 5 minutes for Q&A</li>
+                        <li>Awards will be given for Best Research, Most Innovative Approach, and Best Presentation</li>
+                        <li>Participants will receive certificates of participation</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="event-gallery" id="event-gallery">
+                <div class="gallery-img">
+                    <img src="https://via.placeholder.com/400x300?text=Research+Presentation" alt="Research Presentation">
+                </div>
+                <div class="gallery-img">
+                    <img src="https://via.placeholder.com/400x300?text=Award+Ceremony" alt="Award Ceremony">
+                </div>
+                <div class="gallery-img">
+                    <img src="https://via.placeholder.com/400x300?text=Student+Projects" alt="Student Projects">
+                </div>
+                <div class="gallery-img">
+                    <img src="https://via.placeholder.com/400x300?text=Faculty+Panel" alt="Faculty Panel">
+                </div>
+            </div>
+        </section>
+
+        <section class="feedback-section">
+            <h2>
+                Feedback & Ratings
+                <span class="overall-rating">
+                    <span class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </span>
+                    <span id="average-rating">4.0</span> (<span id="total-ratings">5</span> reviews)
+                </span>
+            </h2>
+
+            <div class="feedback-form">
+                <h3>Share Your Experience</h3>
+                <form id="feedback-form">
+                    <div class="form-group">
+                        <label for="user-name">Your Name</label>
+                        <input type="text" id="user-name" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="user-email">Your Email (optional)</label>
+                        <input type="email" id="user-email" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Rating</label>
+                        <div class="rating-input" id="rating-input">
+                            <i class="far fa-star" data-value="1"></i>
+                            <i class="far fa-star" data-value="2"></i>
+                            <i class="far fa-star" data-value="3"></i>
+                            <i class="far fa-star" data-value="4"></i>
+                            <i class="far fa-star" data-value="5"></i>
+                        </div>
+                        <input type="hidden" id="user-rating" value="0">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="feedback-text">Your Feedback</label>
+                        <textarea id="feedback-text" class="form-control" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Upload Images (optional)</label>
+                        <label for="feedback-images" class="file-input-label">
+                            <i class="fas fa-image"></i> Choose Images
+                        </label>
+                        <input type="file" id="feedback-images" class="file-input" accept="image/*" multiple>
+                        <div class="image-preview" id="image-preview"></div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Submit Feedback</button>
+                </form>
+            </div>
+
+            <div class="feedback-list" id="feedback-list">
+                <!-- Feedback items will be dynamically loaded here -->
+            </div>
+        </section>
+    </div>
+
+    <!-- Edit Feedback Modal -->
+    <div class="modal" id="edit-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Edit Your Feedback</h3>
+                <button class="modal-close" id="close-edit-modal">&times;</button>
+            </div>
+            <form id="edit-feedback-form">
+                <input type="hidden" id="edit-feedback-id">
+                <div class="form-group">
+                    <label>Rating</label>
+                    <div class="rating-input" id="edit-rating-input">
+                        <i class="far fa-star" data-value="1"></i>
+                        <i class="far fa-star" data-value="2"></i>
+                        <i class="far fa-star" data-value="3"></i>
+                        <i class="far fa-star" data-value="4"></i>
+                        <i class="far fa-star" data-value="5"></i>
+                    </div>
+                    <input type="hidden" id="edit-user-rating" value="0">
+                </div>
+
+                <div class="form-group">
+                    <label for="edit-feedback-text">Your Feedback</label>
+                    <textarea id="edit-feedback-text" class="form-control" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Upload Additional Images (optional)</label>
+                    <label for="edit-feedback-images" class="file-input-label">
+                        <i class="fas fa-image"></i> Choose Images
+                    </label>
+                    <input type="file" id="edit-feedback-images" class="file-input" accept="image/*" multiple>
+                    <div class="image-preview" id="edit-image-preview"></div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Update Feedback</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+    // Event details data - in a real implementation, this would be fetched from a server
+const eventsData = {
+    "Undergraduate Research Symposium": {
+        title: "Undergraduate Research Symposium",
+        date: "April 20, 2025",
+        location: "Virtual Event (Zoom)",
+        organizer: "IT Department",
+        description: "Present your research projects to faculty, peers, and industry professionals. A virtual event open to all IT undergraduates engaged in research. Registration required to present. The Undergraduate Research Symposium provides an opportunity for students to showcase their research work, receive valuable feedback from experienced professionals, and network with like-minded peers. This event helps students develop their presentation skills and prepare for future academic conferences.",
+        additionalInfo: [
+            "Submit abstracts by April 1, 2025",
+            "Each presentation will be 15 minutes with 5 minutes for Q&A",
+            "Awards will be given for Best Research, Most Innovative Approach, and Best Presentation",
+            "Participants will receive certificates of participation",
+            "Faculty mentors are available to help prepare presentations"
+        ],
+        galleryImages: [
+            "https://via.placeholder.com/400x300?text=Research+Presentation",
+            "https://via.placeholder.com/400x300?text=Award+Ceremony",
+            "https://via.placeholder.com/400x300?text=Student+Projects",
+            "https://via.placeholder.com/400x300?text=Faculty+Panel"
+        ]
+    },
+    // Add more events as needed
+};
+
+// Initialize variables
+let currentRating = 0;
+let currentEditId = null;
+let uploadedImages = [];
+let editUploadedImages = [];
+let currentEventName = "Undergraduate Research Symposium"; // Default event
+
+// Load the event from localStorage
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize the eventFeedbacks in localStorage if it doesn't exist
+    if (!localStorage.getItem('eventFeedbacks')) {
+        localStorage.setItem('eventFeedbacks', JSON.stringify([]));
+    }
+
+    // Get current event name from localStorage or use default
+    currentEventName = localStorage.getItem('currentEvent') || "Undergraduate Research Symposium";
+    
+    // Make sure we save the current event for future page loads
+    localStorage.setItem('currentEvent', currentEventName);
+    
+    // Load event details and feedback
+    loadEventDetails(currentEventName);
+    loadFeedbacks(currentEventName);
+    
+    // Setup UI interactions
+    setupRatingSystem();
+    setupImageUpload();
+    setupFormSubmission();
+    setupEditModal();
+    
+    // Debug information - check what's in localStorage
+    console.log("localStorage eventFeedbacks:", JSON.parse(localStorage.getItem('eventFeedbacks')));
+});
+
+// Load event details
+function loadEventDetails(eventName) {
+    const eventData = eventsData[eventName] || eventsData["Undergraduate Research Symposium"];
+    
+    document.getElementById('event-title').textContent = eventData.title;
+    document.getElementById('event-date').textContent = eventData.date;
+    document.getElementById('event-location').textContent = eventData.location;
+    document.getElementById('event-organizer').textContent = eventData.organizer;
+    document.getElementById('event-description').textContent = eventData.description;
+    
+    // Load additional info
+    const additionalInfoList = document.getElementById('event-additional-info');
+    additionalInfoList.innerHTML = '';
+    eventData.additionalInfo.forEach(info => {
+        const li = document.createElement('li');
+        li.textContent = info;
+        additionalInfoList.appendChild(li);
+    });
+    
+    // Load gallery images
+    const gallery = document.getElementById('event-gallery');
+    gallery.innerHTML = '';
+    eventData.galleryImages.forEach(imgSrc => {
+        const div = document.createElement('div');
+        div.className = 'gallery-img';
+        const img = document.createElement('img');
+        img.src = imgSrc;
+        img.alt = eventData.title;
+        div.appendChild(img);
+        gallery.appendChild(div);
+    });
+}
+
+// Setup rating system
+function setupRatingSystem() {
+    const ratingStars = document.querySelectorAll('#rating-input i');
+    ratingStars.forEach(star => {
+        star.addEventListener('mouseenter', function() {
+            const value = parseInt(this.getAttribute('data-value'));
+            highlightStars(ratingStars, value);
+        });
+        
+        star.addEventListener('click', function() {
+            const value = parseInt(this.getAttribute('data-value'));
+            currentRating = value;
+            document.getElementById('user-rating').value = value;
+            highlightStars(ratingStars, value);
+        });
+    });
+    
+    document.getElementById('rating-input').addEventListener('mouseleave', function() {
+        highlightStars(ratingStars, currentRating);
+    });
+    
+    // Edit rating
+    const editRatingStars = document.querySelectorAll('#edit-rating-input i');
+    editRatingStars.forEach(star => {
+        star.addEventListener('mouseenter', function() {
+            const value = parseInt(this.getAttribute('data-value'));
+            highlightStars(editRatingStars, value);
+        });
+        
+        star.addEventListener('click', function() {
+            const value = parseInt(this.getAttribute('data-value'));
+            document.getElementById('edit-user-rating').value = value;
+            highlightStars(editRatingStars, value);
+        });
+    });
+    
+    document.getElementById('edit-rating-input').addEventListener('mouseleave', function() {
+        const rating = parseInt(document.getElementById('edit-user-rating').value);
+        highlightStars(editRatingStars, rating);
+    });
+}
+
+// Highlight stars up to the specified value
+function highlightStars(stars, value) {
+    stars.forEach(star => {
+        const starValue = parseInt(star.getAttribute('data-value'));
+        if (starValue <= value) {
+            star.className = 'fas fa-star active';
+        } else {
+            star.className = 'far fa-star';
+        }
+    });
+}
+
+// Setup image upload
+function setupImageUpload() {
+    const imageInput = document.getElementById('feedback-images');
+    const previewContainer = document.getElementById('image-preview');
+    
+    imageInput.addEventListener('change', function() {
+        handleImageUpload(this.files, previewContainer, uploadedImages);
+    });
+    
+    // Edit image upload
+    const editImageInput = document.getElementById('edit-feedback-images');
+    const editPreviewContainer = document.getElementById('edit-image-preview');
+    
+    editImageInput.addEventListener('change', function() {
+        handleImageUpload(this.files, editPreviewContainer, editUploadedImages);
+    });
+}
+
+// Handle image upload
+function handleImageUpload(files, previewContainer, imagesArray) {
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+            const imgSrc = e.target.result;
+            imagesArray.push(imgSrc);
+            
+            const previewItem = document.createElement('div');
+            previewItem.className = 'image-preview-item';
+            
+            const img = document.createElement('img');
+            img.src = imgSrc;
+            previewItem.appendChild(img);
+            
+            const removeBtn = document.createElement('div');
+            removeBtn.className = 'remove-image';
+            removeBtn.innerHTML = '&times;';
+            removeBtn.addEventListener('click', function() {
+                const index = imagesArray.indexOf(imgSrc);
+                if (index > -1) {
+                    imagesArray.splice(index, 1);
+                }
+                previewContainer.removeChild(previewItem);
+            });
+            
+            previewItem.appendChild(removeBtn);
+            previewContainer.appendChild(previewItem);
+        };
+        
+        reader.readAsDataURL(file);
+    }
+}
+
+// Setup form submission
+function setupFormSubmission() {
+    const form = document.getElementById('feedback-form');
+    
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const userName = document.getElementById('user-name').value;
+        const userEmail = document.getElementById('user-email').value;
+        const rating = parseInt(document.getElementById('user-rating').value);
+        const feedbackText = document.getElementById('feedback-text').value;
+        
+        if (!userName || !feedbackText || rating === 0) {
+            alert('Please fill in all required fields and provide a rating');
+            return;
+        }
+        
+        // Create feedback object
+        const feedback = {
+            id: generateId(),
+            eventName: currentEventName,
+            userName: userName,
+            userEmail: userEmail,
+            rating: rating,
+            text: feedbackText,
+            images: [...uploadedImages],
+            date: new Date().toISOString()
+        };
+        
+        // Save feedback to localStorage
+        saveFeedback(feedback);
+        
+        // Reset form
+        form.reset();
+        document.getElementById('image-preview').innerHTML = '';
+        uploadedImages = [];
+        currentRating = 0;
+        document.getElementById('user-rating').value = 0;
+        highlightStars(document.querySelectorAll('#rating-input i'), 0);
+        
+        // Reload feedbacks
+        loadFeedbacks(currentEventName);
+    });
+    
+    // Edit form submission
+    const editForm = document.getElementById('edit-feedback-form');
+    
+    editForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const rating = parseInt(document.getElementById('edit-user-rating').value);
+        const feedbackText = document.getElementById('edit-feedback-text').value;
+        
+        if (!feedbackText || rating === 0) {
+            alert('Please fill in all required fields and provide a rating');
+            return;
+        }
+        
+        // Update feedback
+        updateFeedback(currentEditId, {
+            rating: rating,
+            text: feedbackText,
+            images: [...editUploadedImages]
+        });
+        
+        // Close modal
+        document.getElementById('edit-modal').classList.remove('active');
+        
+        // Reset form
+        editForm.reset();
+        document.getElementById('edit-image-preview').innerHTML = '';
+        editUploadedImages = [];
+        
+        // Reload feedbacks
+        loadFeedbacks(currentEventName);
+    });
+}
+
+// Setup edit modal
+function setupEditModal() {
+    document.getElementById('close-edit-modal').addEventListener('click', function() {
+        document.getElementById('edit-modal').classList.remove('active');
+    });
+}
+
+// Generate unique ID
+function generateId() {
+    return 'feedback_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+}
+
+// Save feedback to localStorage
+function saveFeedback(feedback) {
+    try {
+        // Get existing feedbacks
+        const feedbacks = JSON.parse(localStorage.getItem('eventFeedbacks')) || [];
+        
+        // Add new feedback
+        feedbacks.push(feedback);
+        
+        // Save back to localStorage
+        localStorage.setItem('eventFeedbacks', JSON.stringify(feedbacks));
+        
+        console.log("Feedback saved successfully:", feedback);
+        console.log("All feedbacks now:", feedbacks);
+        
+        // Update average rating
+        updateAverageRating(feedback.eventName);
+    } catch (error) {
+        console.error("Error saving feedback:", error);
+        alert("There was an error saving your feedback. Please try again.");
+    }
+}
+
+// Update existing feedback
+function updateFeedback(id, updates) {
+    try {
+        // Get existing feedbacks
+        const feedbacks = JSON.parse(localStorage.getItem('eventFeedbacks')) || [];
+        
+        // Find the feedback to update
+        const index = feedbacks.findIndex(feedback => feedback.id === id);
+        
+        if (index > -1) {
+            // Update the feedback
+            feedbacks[index] = {
+                ...feedbacks[index],
+                ...updates,
+                // Add any new images to existing ones
+                images: [...feedbacks[index].images, ...updates.images]
+            };
+            
+            // Save back to localStorage
+            localStorage.setItem('eventFeedbacks', JSON.stringify(feedbacks));
+            
+            console.log("Feedback updated successfully:", feedbacks[index]);
+            
+            // Update average rating
+            updateAverageRating(feedbacks[index].eventName);
+        }
+    } catch (error) {
+        console.error("Error updating feedback:", error);
+        alert("There was an error updating your feedback. Please try again.");
+    }
+}
+
+// Delete feedback
+function deleteFeedback(id) {
+    try {
+        // Get existing feedbacks
+        const feedbacks = JSON.parse(localStorage.getItem('eventFeedbacks')) || [];
+        
+        // Find the feedback to delete
+        const index = feedbacks.findIndex(feedback => feedback.id === id);
+        
+        if (index > -1) {
+            const eventName = feedbacks[index].eventName;
+            
+            // Remove the feedback
+            feedbacks.splice(index, 1);
+            
+            // Save back to localStorage
+            localStorage.setItem('eventFeedbacks', JSON.stringify(feedbacks));
+            
+            console.log("Feedback deleted successfully. ID:", id);
+            
+            // Update average rating
+            updateAverageRating(eventName);
+        }
+    } catch (error) {
+        console.error("Error deleting feedback:", error);
+        alert("There was an error deleting the feedback. Please try again.");
+    }
+}
+
+// Load feedbacks for an event
+function loadFeedbacks(eventName) {
+    try {
+        console.log("Loading feedbacks for event:", eventName);
+        
+        // Get all feedbacks
+        const allFeedbacks = JSON.parse(localStorage.getItem('eventFeedbacks')) || [];
+        console.log("All feedbacks from localStorage:", allFeedbacks);
+        
+        // Filter by event name
+        const eventFeedbacks = allFeedbacks.filter(feedback => feedback.eventName === eventName);
+        console.log("Filtered feedbacks for this event:", eventFeedbacks);
+        
+        // Update the DOM
+        displayFeedbacks(eventFeedbacks);
+        
+        // Update average rating
+        updateAverageRating(eventName);
+    } catch (error) {
+        console.error("Error loading feedbacks:", error);
+        // Display a user-friendly message on the page
+        const container = document.getElementById('feedback-list');
+        container.innerHTML = '<p>Sorry, there was an error loading the feedback. Please refresh the page and try again.</p>';
+    }
+}
+
+// Display feedbacks in the DOM
+function displayFeedbacks(feedbacks) {
+    const container = document.getElementById('feedback-list');
+    container.innerHTML = '';
+    
+    if (!feedbacks || feedbacks.length === 0) {
+        const noFeedback = document.createElement('p');
+        noFeedback.textContent = 'Be the first to share your feedback!';
+        container.appendChild(noFeedback);
+        return;
+    }
+    
+    // Sort feedbacks by date (newest first)
+    feedbacks.sort((a, b) => new Date(b.date) - new Date(a.date));
+    
+    feedbacks.forEach(feedback => {
+        const feedbackItem = createFeedbackItem(feedback);
+        container.appendChild(feedbackItem);
+    });
+}
+
+// Create a feedback item element
+function createFeedbackItem(feedback) {
+    const item = document.createElement('div');
+    item.className = 'feedback-item';
+    item.setAttribute('data-id', feedback.id);
+    
+    const header = document.createElement('div');
+    header.className = 'feedback-header';
+    
+    const userInfo = document.createElement('div');
+    userInfo.className = 'user-info';
+    userInfo.textContent = feedback.userName;
+    
+    const ratingDiv = document.createElement('div');
+    ratingDiv.className = 'feedback-rating';
+    
+    const stars = document.createElement('span');
+    stars.className = 'stars';
+    for (let i = 1; i <= 5; i++) {
+        const star = document.createElement('i');
+        star.className = i <= feedback.rating ? 'fas fa-star' : 'far fa-star';
+        stars.appendChild(star);
+    }
+    
+    const ratingValue = document.createElement('span');
+    ratingValue.textContent = feedback.rating;
+    
+    ratingDiv.appendChild(stars);
+    ratingDiv.appendChild(ratingValue);
+    
+    header.appendChild(userInfo);
+    header.appendChild(ratingDiv);
+    
+    const content = document.createElement('div');
+    content.className = 'feedback-content';
+    content.textContent = feedback.text;
+    
+    item.appendChild(header);
+    item.appendChild(content);
+    
+    // Add images if any
+    if (feedback.images && feedback.images.length > 0) {
+        const imagesContainer = document.createElement('div');
+        imagesContainer.className = 'feedback-images';
+        
+        feedback.images.forEach(imgSrc => {
+            const imgDiv = document.createElement('div');
+            imgDiv.className = 'feedback-image';
+            
+            const img = document.createElement('img');
+            img.src = imgSrc;
+            imgDiv.appendChild(img);
+            
+            imagesContainer.appendChild(imgDiv);
+        });
+        
+        item.appendChild(imagesContainer);
+    }
+    
+    // Add actions (edit, delete)
+    const actions = document.createElement('div');
+    actions.className = 'feedback-actions';
+    
+    const editBtn = document.createElement('button');
+    editBtn.className = 'action-btn edit';
+    editBtn.innerHTML = '<i class="fas fa-edit"></i> Edit';
+    editBtn.addEventListener('click', function() {
+        openEditModal(feedback);
+    });
+    
+    const deleteBtn = document.createElement('button');
+    deleteBtn.className = 'action-btn delete';
+    deleteBtn.innerHTML = '<i class="fas fa-trash"></i> Delete';
+    deleteBtn.addEventListener('click', function() {
+        if (confirm('Are you sure you want to delete this feedback?')) {
+            deleteFeedback(feedback.id);
+            item.remove();
+            updateAverageRating(feedback.eventName);
+        }
+    });
+    
+    actions.appendChild(editBtn);
+    actions.appendChild(deleteBtn);
+    
+    item.appendChild(actions);
+    
+    return item;
+}
+
+// Open edit modal
+function openEditModal(feedback) {
+    // Set current edit ID
+    currentEditId = feedback.id;
+    
+    // Set form values
+    document.getElementById('edit-user-rating').value = feedback.rating;
+    document.getElementById('edit-feedback-text').value = feedback.text;
+    
+    // Highlight stars
+    highlightStars(document.querySelectorAll('#edit-rating-input i'), feedback.rating);
+    
+    // Clear image preview
+    document.getElementById('edit-image-preview').innerHTML = '';
+    editUploadedImages = [];
+    
+    // Show existing images
+    if (feedback.images && feedback.images.length > 0) {
+        const previewContainer = document.getElementById('edit-image-preview');
+        
+        feedback.images.forEach(imgSrc => {
+            const previewItem = document.createElement('div');
+            previewItem.className = 'image-preview-item';
+            
+            const img = document.createElement('img');
+            img.src = imgSrc;
+            previewItem.appendChild(img);
+            
+            const removeBtn = document.createElement('div');
+            removeBtn.className = 'remove-image';
+            removeBtn.innerHTML = '&times;';
+            removeBtn.addEventListener('click', function() {
+                // Remove from displayed images
+                const updatedImages = feedback.images.filter(src => src !== imgSrc);
+                
+                // Update feedback in localStorage
+                updateFeedback(feedback.id, { images: updatedImages });
+                
+                // Remove from preview
+                previewContainer.removeChild(previewItem);
+            });
+            
+            previewItem.appendChild(removeBtn);
+            previewContainer.appendChild(previewItem);
+        });
+    }
+    
+    // Show modal
+    document.getElementById('edit-modal').classList.add('active');
+}
+
+// Update average rating
+function updateAverageRating(eventName) {
+    try {
+        // Get all feedbacks
+        const allFeedbacks = JSON.parse(localStorage.getItem('eventFeedbacks')) || [];
+        
+        // Filter by event name
+        const eventFeedbacks = allFeedbacks.filter(feedback => feedback.eventName === eventName);
+        
+        // Calculate average rating
+        let totalRating = 0;
+        eventFeedbacks.forEach(feedback => {
+            totalRating += feedback.rating;
+        });
+        
+        const averageRating = eventFeedbacks.length > 0 ? 
+            (totalRating / eventFeedbacks.length).toFixed(1) : 0;
+        
+        // Update DOM
+        document.getElementById('average-rating').textContent = averageRating;
+        document.getElementById('total-ratings').textContent = eventFeedbacks.length;
+        
+        // Update stars
+        const starsContainer = document.querySelector('.feedback-section .overall-rating .stars');
+        starsContainer.innerHTML = '';
+        
+        for (let i = 1; i <= 5; i++) {
+            const star = document.createElement('i');
+            if (i <= Math.floor(averageRating)) {
+                star.className = 'fas fa-star';
+            } else if (i - 0.5 <= averageRating) {
+                star.className = 'fas fa-star-half-alt';
+            } else {
+                star.className = 'far fa-star';
+            }
+            starsContainer.appendChild(star);
+        }
+    } catch (error) {
+        console.error("Error updating average rating:", error);
+    }
+}
+        </script>
+        </body>
+        </html>

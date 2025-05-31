@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University Profiles | Global Event Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.10.3/cdn.min.js" defer></script>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #4f46e5;
+            --accent: #f97316;
+            --light: #f8fafc;
+            --dark: #0f172a;
+            --gray: #64748b;
+            --gray-light: #e2e8f0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--light);
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0.5rem 1rem;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            text-decoration: underline;
+            opacity: 0.8;
+        }
+        
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .hero {
+            background-image: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.7)), url('/api/placeholder/1600/500');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 5rem 2rem;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        
+        .search-container {
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .search-container input {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border-radius: 9999px;
+            border: none;
+            font-size: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .search-container button {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--accent);
+            color: white;
+            border: none;
+            height: 2.5rem;
+            width: 2.5rem;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .search-container button:hover {
+            background-color: #ea580c;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+        
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            justify-content: center;
+        }
+        
+        .filter-button {
+            background-color: white;
+            border: 1px solid var(--gray-light);
+            color: var(--dark);
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-button:hover, .filter-button.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .universities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .university-card {
+            background-color: white;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .university-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .university-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .university-location {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            background-color: rgba(15, 23, 42, 0.8);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            font-size: 0.875rem;
+            border-top-right-radius: 0.5rem;
+        }
+        
+        .university-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--accent);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .university-content {
+            padding: 1.5rem;
+        }
+        
+        .university-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+        
+        .university-details {
+            margin-bottom: 1rem;
+            color: var(--gray);
+            font-size: 0.875rem;
+        }
+        
+        .university-stats {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 1rem;
+            border-top: 1px solid var(--gray-light);
+            color: var(--gray);
+            font-size: 0.875rem;
+        }
+        
+        .university-stat {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        
+        .view-profile {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+            margin-top: 1rem;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+        
+        .view-profile:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .featured-section {
+            background-color: #f1f5f9;
+            padding: 3rem 0;
+            margin: 3rem 0;
+        }
+        
+        .featured-university {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .featured-image {
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .featured-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .featured-content h3 {
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .featured-content p {
+            margin-bottom: 1.5rem;
+            color: var(--gray);
+        }
+        
+        .badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .badge {
+            background-color: var(--primary);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+        }
+        
+        .upcoming-events {
+            margin-top: 1.5rem;
+        }
+        
+        .event-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--gray-light);
+        }
+        
+        .event-date {
+            background-color: var(--primary);
+            color: white;
+            width: 3rem;
+            height: 3rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.25rem;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+        
+        .event-details h4 {
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+        
+        .event-details p {
+            font-size: 0.875rem;
+            color: var(--gray);
+        }
+        
+        .cta-section {
+            text-align: center;
+            padding: 4rem 2rem;
+            background-color: var(--dark);
+            color: white;
+        }
+        
+        .cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .cta-section p {
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.25rem;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .primary-button {
+            background-color: var(--accent);
+            color: white;
+        }
+        
+        .primary-button:hover {
+            background-color: #ea580c;
+        }
+        
+        .secondary-button {
+            background-color: transparent;
+            color: white;
+            border: 1px solid white;
+        }
+        
+        .secondary-button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 2rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links a {
+            color: var(--gray-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-link {
+            color: white;
+            font-size: 1.5rem;
+            transition: opacity 0.3s ease;
+        }
+        
+        .social-link:hover {
+            opacity: 0.8;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--gray-light);
+        }
+        
+        @media (min-width: 768px) {
+            .featured-university {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.3rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .universities-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>UniEvents Global</span>
+            </div>
+            <div class="nav-links">
+                <a href="#">Home</a>
+                <a href="#">Events</a>
+                <a href="#" class="active">Universities</a>
+                <a href="#">About</a>
+                <a href="#">Contact</a>
+            </div>
+            <div class="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+    </header>
+
+    <div class="hero">
+        <h1>Discover Universities Worldwide</h1>
+        <p>Browse through our global network of partner universities hosting educational events, conferences, and workshops.</p>
+        <div class="search-container">
+            <input type="text" placeholder="Search for universities, locations, or specializations...">
+            <button type="submit"><i class="fas fa-search"></i></button>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2 class="section-title">Featured Universities</h2>
+        
+        <div class="filters">
+            <button class="filter-button active">All Regions</button>
+            <button class="filter-button">North America</button>
+            <button class="filter-button">Europe</button>
+            <button class="filter-button">Asia</button>
+            <button class="filter-button">Africa</button>
+            <button class="filter-button">South America</button>
+            <button class="filter-button">Australia</button>
+        </div>
+        
+        <div class="universities-grid">
+            <!-- University Card 1 -->
+            <div class="university-card">
+                <div class="university-image" style="background-image: url('/api/placeholder/600/400')">
+                    <div class="university-location">
+                        <i class="fas fa-map-marker-alt"></i> Cambridge, MA, USA
+                    </div>
+                    <div class="university-badge">
+                        Top Rated
+                    </div>
+                </div>
+                <div class="university-content">
+                    <h3 class="university-name">Harvard University</h3>
+                    <div class="university-details">
+                        <p>Established in 1636, Harvard is one of the world's most prestigious universities known for excellence in research and education.</p>
+                    </div>
+                    <div class="university-stats">
+                        <div class="university-stat">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>12 Events</span>
+                        </div>
+                        <div class="university-stat">
+                            <i class="fas fa-users"></i>
+                            <span>24,000+ Students</span>
+                        </div>
+                    </div>
+                    <a href="#" class="view-profile">View Profile</a>
+                </div>
+            </div>
+            
+            <!-- University Card 2 -->
+            <div class="university-card">
+                <div class="university-image" style="background-image: url('/api/placeholder/600/400')">
+                    <div class="university-location">
+                        <i class="fas fa-map-marker-alt"></i> Oxford, UK
+                    </div>
+                </div>
+                <div class="university-content">
+                    <h3 class="university-name">University of Oxford</h3>
+                    <div class="university-details">
+                        <p>The oldest university in the English-speaking world, with evidence of teaching dating back to 1096.</p>
+                    </div>
+                    <div class="university-stats">
+                        <div class="university-stat">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>9 Events</span>
+                        </div>
+                        <div class="university-stat">
+                            <i class="fas fa-users"></i>
+                            <span>24,000+ Students</span>
+                        </div>
+                    </div>
+                    <a href="#" class="view-profile">View Profile</a>
+                </div>
+            </div>
+            
+            <!-- University Card 3 -->
+            <div class="university-card">
+                <div class="university-image" style="background-image: url('/api/placeholder/600/400')">
+                    <div class="university-location">
+                        <i class="fas fa-map-marker-alt"></i> Tokyo, Japan
+                    </div>
+                </div>
+                <div class="university-content">
+                    <h3 class="university-name">University of Tokyo</h3>
+                    <div class="university-details">
+                        <p>Japan's leading university and one of Asia's most prestigious educational institutions.</p>
+                    </div>
+                    <div class="university-stats">
+                        <div class="university-stat">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>8 Events</span>
+                        </div>
+                        <div class="university-stat">
+                            <i class="fas fa-users"></i>
+                            <span>30,000+ Students</span>
+                        </div>
+                    </div>
+                    <a href="#" class="view-profile">View Profile</a>
+                </div>
+            </div>
+            
+            <!-- University Card 4 -->
+            <div class="university-card">
+                <div class="university-image" style="background-image: url('/api/placeholder/600/400')">
+                    <div class="university-location">
+                        <i class="fas fa-map-marker-alt"></i> Berlin, Germany
+                    </div>
+                </div>
+                <div class="university-content">
+                    <h3 class="university-name">Humboldt University of Berlin</h3>
+                    <div class="university-details">
+                        <p>One of Berlin's oldest universities, known for its pioneering research and influential alumni.</p>
+                    </div>
+                    <div class="university-stats">
+                        <div class="university-stat">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>7 Events</span>
+                        </div>
+                        <div class="university-stat">
+                            <i class="fas fa-users"></i>
+                            <span>33,000+ Students</span>
+                        </div>
+                    </div>
+                    <a href="#" class="view-profile">View Profile</a>
+                </div>
+            </div>
+            
+            <!-- University Card 5 -->
+            <div class="university-card">
+                <div class="university-image" style="background-image: url('/api/placeholder/600/400')">
+                    <div class="university-location">
+                        <i class="fas fa-map-marker-alt"></i> Melbourne, Australia
+                    </div>
+                </div>
+                <div class="university-content">
+                    <h3 class="university-name">University of Melbourne</h3>
+                    <div class="university-details">
+                        <p>Australia's second oldest university and a leading institution in research, learning and teaching.</p>
+                    </div>
+                    <div class="university-stats">
+                        <div class="university-stat">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>5 Events</span>
+                        </div>
+                        <div class="university-stat">
+                            <i class="fas fa-users"></i>
+                            <span>47,000+ Students</span>
+                        </div>
+                    </div>
+                    <a href="#" class="view-profile">View Profile</a>
+                </div>
+            </div>
+            
+            <!-- University Card 6 -->
+            <div class="university-card">
+                <div class="university-image" style="background-image: url('/api/placeholder/600/400')">
+                    <div class="university-location">
+                        <i class="fas fa-map-marker-alt"></i> Cape Town, South Africa
+                    </div>
+                </div>
+                <div class="university-content">
+                    <h3 class="university-name">University of Cape Town</h3>
+                    <div class="university-details">
+                        <p>The oldest university in South Africa and one of Africa's leading teaching and research institutions.</p>
+                    </div>
+                    <div class="university-stats">
+                        <div class="university-stat">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>4 Events</span>
+                        </div>
+                        <div class="university-stat">
+                            <i class="fas fa-users"></i>
+                            <span>26,000+ Students</span>
+                        </div>
+                    </div>
+                    <a href="#" class="view-profile">View Profile</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="featured-section">
+        <div class="container">
+            <h2 class="section-title">Spotlight University</h2>
+            
+            <div class="featured-university">
+                <div class="featured-image">
+                    <img src="/api/placeholder/600/400" alt="Stanford University Campus">
+                </div>
+                <div class="featured-content">
+                    <h3>Stanford University</h3>
+                    <div class="badges">
+                        <span class="badge">Research Excellence</span>
+                        <span class="badge">Innovation Hub</span>
+                        <span class="badge">Top Ranked</span>
+                    </div>
+                    <p>Stanford University, located in the heart of Silicon Valley, is renowned for its academic achievements, wealth of opportunities, and entrepreneurial spirit. Founded in 1885, it has been at the forefront of innovation and research across multiple disciplines.</p>
+                    <p>The university is home to approximately 7,000 undergraduate students and 9,000 graduate students, with a faculty that includes 22 Nobel laureates and 5 Pulitzer Prize winners.</p>
+                    
+                    <div class="upcoming-events">
+                        <h4>Upcoming Events:</h4>
+                        <div class="event-item">
+                            <div class="event-date">
+                                <span>15</span>
+                                <span>May</span>
+                            </div>
+                            <div class="event-details">
+                                <h4>Global Innovation Summit</h4>
+                                <p>A gathering of industry leaders discussing future technologies</p>
+                            </div>
+                        </div>
+                        <div class="event-item">
+                            <div class="event-date">
+                                <span>22</span>
+                                <span>May</span>
+                            </div>
+                            <div class="event-details">
+                                <h4>Climate Solutions Conference</h4>
+                                <p>International forum on sustainable environmental practices</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <a href="#" class="view-profile">View Full Profile</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="cta-section">
+        <h2>Join Our University Network</h2>
+        <p>Are you representing a university and want to showcase your events on our global platform? Partner with us to reach a wider audience and connect with students and academics worldwide.</p>
+        <div class="cta-buttons">
+            <a href="#" class="cta-button primary-button">Become a Partner</a>
+            <a href="#" class="cta-button secondary-button">Learn More</a>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>UniEvents Global</h3>
+                <p>Connecting universities and event participants worldwide through our comprehensive platform.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Universities</a></li>
+                    <li><a href="#">Events</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Resources</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Academic Calendar</a></li>
+                    <li><a href="#">Event Guidelines</a></li>
+                    <li><a href="#">University Rankings</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">FAQs</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <ul class="footer-links">
+                    <li><i class="fas fa-envelope"></i> info@unievents.global</li>
+                    <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                    <li><i class="fas fa-map-marker-alt"></i> 123 University Ave, Global City</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 UniEvents Global. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Simple Alpine.js data for handling interactive elements
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('universityPage', () => ({
+                activeFilter: 'All Regions',
+                
+                setActiveFilter(filter) {
+                    this.activeFilter = filter;
+                    // In a real implementation, you would filter universities here
+                }
+            }));
+        });
+        
+        // Basic mobile menu toggle
+        document.querySelector('.mobile-menu').addEventListener('click', function() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        });
+        
+        // Filter button functionality
+        document.querySelectorAll('.filter-button').forEach(button => {
+            button.addEventListener('click', function() {
+                document.querySelectorAll('.filter-button').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                this.classList.add('active');
+                // In a real implementation, you would filter universities here
+            });
+        });
+    </script>
+</body>
+</html>

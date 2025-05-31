@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT Faculty - Events</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+  
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap');
+
+:root {
+  --primary-color: #2563eb;
+  --primary-dark: #1d4ed8;
+  --primary-light: #60a5fa;
+  --secondary-color: #4f46e5;
+  --accent-color: #8b5cf6;
+  --success-color: #10b981;
+  --error-color: #ef4444;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+  --white: #ffffff;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --border-radius-sm: 0.25rem;
+  --border-radius-md: 0.5rem;
+  --border-radius-lg: 1rem;
+  --transition: all 0.3s ease;
+}
+
+/* ---- RESET ---- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.6;
+  color: var(--gray-800);
+  background-color: #f9fafb;
+  min-height: 100vh;
+}
+
+a {
+  text-decoration: none;
+  color: var(--primary-color);
+  transition: var(--transition);
+}
+
+a:hover {
+  color: var(--primary-dark);
+}
+
+button {
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* ---- HEADER ---- */
+header {
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: var(--white);
+  padding: 2.5rem 2rem;
+  text-align: center;
+  border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg);
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-lg);
+}
+
+header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+header p {
+  font-size: 1.2rem;
+  opacity: 0.9;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ---- MAIN CONTAINER ---- */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* ---- SEARCH BAR ---- */
+.search-container {
+  display: flex;
+  max-width: 800px;
+  margin: 0 auto 2.5rem;
+  box-shadow: var(--shadow-md);
+  border-radius: var(--border-radius-md);
+  overflow: hidden;
+  background-color: var(--white);
+  border: 1px solid var(--gray-200);
+}
+
+#searchInput {
+  flex: 1;
+  padding: 1rem 1.5rem;
+  border: none;
+  font-size: 1rem;
+  outline: none;
+  color: var(--gray-800);
+}
+
+#searchInput::placeholder {
+  color: var(--gray-400);
+}
+
+#searchButton {
+  background-color: var(--primary-color);
+  color: var(--white);
+  border: none;
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+#searchButton:hover {
+  background-color: var(--primary-dark);
+}
+
+/* ---- CATEGORIES SECTION ---- */
+.categories-section {
+  margin-bottom: 3rem;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.section-header h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--gray-900);
+  font-family: 'Montserrat', sans-serif;
+}
+
+.see-all {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--primary-color);
+  transition: var(--transition);
+}
+
+.see-all:hover {
+  color: var(--primary-dark);
+  text-decoration: underline;
+}
+
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 1.25rem;
+}
+
+.category-item {
+  background-color: var(--white);
+  border-radius: var(--border-radius-md);
+  padding: 1.25rem 1rem;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-200);
+  transition: var(--transition);
+  cursor: pointer;
+}
+
+.category-item:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--primary-light);
+}
+
+.category-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  margin-bottom: 0.75rem;
+  font-size: 1.75rem;
+  color: var(--primary-color);
+}
+
+.category-item[data-category="academic"] .category-icon { color: #e11d48; }
+.category-item[data-category="social"] .category-icon { color: #3b82f6; }
+.category-item[data-category="career"] .category-icon { color: #10b981; }
+.category-item[data-category="arts"] .category-icon { color: #8b5cf6; }
+.category-item[data-category="sports"] .category-icon { color: #f59e0b; }
+.category-item[data-category="research"] .category-icon { color: #6366f1; }
+.category-item[data-category="volunteer"] .category-icon { color: #ec4899; }
+.category-item[data-category="virtual"] .category-icon { color: #14b8a6; }
+
+.category-name {
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.category-item.active {
+  background-color: var(--primary-color);
+  color: var(--white);
+  border-color: var(--primary-color);
+}
+
+.category-item.active .category-icon {
+  color: var(--white);
+}
+
+/* ---- EVENTS CONTAINER ---- */
+.events-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.event-card {
+  background-color: var(--white);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transition: var(--transition);
+  border: 1px solid var(--gray-200);
+  position: relative;
+}
+
+.event-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.event-image {
+  height: 180px;
+  background: linear-gradient(45deg, var(--primary-light), var(--secondary-color));
+  color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  font-weight: 500;
+  text-align: center;
+  padding: 1rem;
+}
+
+/* Custom backgrounds for different event types */
+.event-card[data-category*="academic"] .event-image {
+  background: linear-gradient(45deg, #fecaca, #ef4444);
+}
+
+.event-card[data-category*="social"] .event-image {
+  background: linear-gradient(45deg, #bfdbfe, #3b82f6);
+}
+
+.event-card[data-category*="career"] .event-image {
+  background: linear-gradient(45deg, #a7f3d0, #10b981);
+}
+
+.event-card[data-category*="arts"] .event-image {
+  background: linear-gradient(45deg, #ddd6fe, #8b5cf6);
+}
+
+.event-card[data-category*="sports"] .event-image {
+  background: linear-gradient(45deg, #fde68a, #f59e0b);
+}
+
+.event-card[data-category*="research"] .event-image {
+  background: linear-gradient(45deg, #c7d2fe, #6366f1);
+}
+
+.event-card[data-category*="volunteer"] .event-image {
+  background: linear-gradient(45deg, #fbcfe8, #ec4899);
+}
+
+.event-card[data-category*="virtual"] .event-image {
+  background: linear-gradient(45deg, #99f6e4, #14b8a6);
+}
+
+.event-details {
+  padding: 1.5rem;
+}
+
+.event-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--gray-900);
+  font-family: 'Montserrat', sans-serif;
+}
+
+.event-date, .event-location {
+  font-size: 0.9rem;
+  color: var(--gray-500);
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+}
+
+.event-date i, .event-location i {
+  margin-right: 0.5rem;
+  color: var(--primary-color);
+}
+
+.event-description {
+  font-size: 0.95rem;
+  color: var(--gray-700);
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.interested-btn {
+  background-color: var(--white);
+  color: var(--primary-color);
+  border: 2px solid var(--primary-color);
+  border-radius: var(--border-radius-md);
+  padding: 0.75rem 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: var(--transition);
+  width: 100%;
+}
+
+.interested-btn:hover {
+  background-color: var(--primary-color);
+  color: var(--white);
+}
+
+/* ---- NO EVENTS MESSAGE ---- */
+.no-events {
+  text-align: center;
+  padding: 3rem;
+  background-color: var(--white);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-sm);
+  margin: 2rem auto;
+  max-width: 600px;
+}
+
+.no-events h3 {
+  font-size: 1.5rem;
+  color: var(--gray-800);
+  margin-bottom: 1rem;
+}
+
+.no-events p {
+  color: var(--gray-500);
+  font-size: 1rem;
+}
+
+/* ---- MODAL STYLES ---- */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  overflow-y: auto;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background-color: var(--white);
+  margin: 2rem auto;
+  padding: 2rem;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-lg);
+  width: 90%;
+  max-width: 600px;
+  position: relative;
+  animation: modalFadeIn 0.3s ease;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.close-modal {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  font-size: 1.75rem;
+  color: var(--gray-500);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.close-modal:hover {
+  color: var(--error-color);
+}
+
+#modalTitle {
+  font-size: 1.75rem;
+  color: var(--gray-900);
+  margin-bottom: 1.75rem;
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+}
+
+/* ---- FORM STYLES ---- */
+.registration-form {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+  color: var(--gray-700);
+  font-weight: 500;
+}
+
+input, textarea {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--gray-300);
+  border-radius: var(--border-radius-md);
+  font-size: 1rem;
+  color: var(--gray-800);
+  transition: var(--transition);
+  font-family: 'Poppins', sans-serif;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.submit-btn {
+  background-color: var(--primary-color);
+  color: var(--white);
+  border: none;
+  padding: 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: var(--border-radius-md);
+  transition: var(--transition);
+  margin-top: 0.5rem;
+}
+
+.submit-btn:hover {
+  background-color: var(--primary-dark);
+}
+
+/* ---- LOADING INDICATOR ---- */
+.loading {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  text-align: center;
+}
+
+.loading-spinner {
+  width: 30px;
+  height: 30px;
+  border: 3px solid rgba(59, 130, 246, 0.2);
+  border-radius: 50%;
+  border-top-color: var(--primary-color);
+  animation: spin 1s ease-in-out infinite;
+  margin-right: 0.75rem;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---- FORM MESSAGES ---- */
+.form-message {
+  display: none;
+  padding: 1rem;
+  margin-top: 1rem;
+  border-radius: var(--border-radius-md);
+  text-align: center;
+}
+
+.success-message {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: var(--success-color);
+  border: 1px solid var(--success-color);
+}
+
+.error-message {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: var(--error-color);
+  border: 1px solid var(--error-color);
+}
+
+/* ---- UTILITIES ---- */
+.hidden {
+  display: none !important;
+}
+
+/* ---- RESPONSIVE DESIGN ---- */
+@media (max-width: 768px) {
+  header {
+    padding: 2rem 1rem;
+  }
+  
+  header h1 {
+    font-size: 2rem;
+  }
+  
+  header p {
+    font-size: 1rem;
+  }
+  
+  .search-container {
+    flex-direction: column;
+  }
+  
+  #searchButton {
+    width: 100%;
+  }
+  
+  .categories-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+  
+  .events-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 576px) {
+  .event-image {
+    height: 150px;
+  }
+  
+  .categories-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  
+  .modal-content {
+    padding: 1.5rem;
+  }
+  
+  #modalTitle {
+    font-size: 1.5rem;
+  }
+}
+
+/* ---- ANIMATIONS ---- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease;
+}
+
+
+body {
+  background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+}
+
+
+.page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+.event-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.more-info-btn {
+    background-color: #346beb;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.more-info-btn:hover {
+    background-color: #1a4cc7;
+}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>IT Faculty Events</h1>
+        <p>Discover upcoming workshops, seminars, and tech events</p>
+    </header>
+
+    <!-- Search Bar -->
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search events by title, location, or description...">
+        <button id="searchButton">Search</button>
+    </div>
+
+  
+
+    <!-- Browse by Category Section -->
+    <div class="categories-section">
+        <div class="section-header">
+            <h2>Browse by Category</h2>
+            <a href="#" class="see-all">See All</a>
+        </div>
+        
+        <div class="categories-grid">
+            <div class="category-item" data-category="academic">
+                <div class="category-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <div class="category-name">Academic</div>
+            </div>
+            <div class="category-item" data-category="social">
+                <div class="category-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="category-name">Social</div>
+            </div>
+            <div class="category-item" data-category="career">
+                <div class="category-icon">
+                    <i class="fas fa-briefcase"></i>
+                </div>
+                <div class="category-name">Career</div>
+            </div>
+            <div class="category-item" data-category="arts">
+                <div class="category-icon">
+                    <i class="fas fa-palette"></i>
+                </div>
+                <div class="category-name">Arts & Culture</div>
+            </div>
+            <div class="category-item" data-category="sports">
+                <div class="category-icon">
+                    <i class="fas fa-futbol"></i>
+                </div>
+                <div class="category-name">Sports</div>
+            </div>
+            <div class="category-item" data-category="research">
+                <div class="category-icon">
+                    <i class="fas fa-flask"></i>
+                </div>
+                <div class="category-name">Research</div>
+            </div>
+            <div class="category-item" data-category="volunteer">
+                <div class="category-icon">
+                    <i class="fas fa-hands-helping"></i>
+                </div>
+                <div class="category-name">Volunteer</div>
+            </div>
+            <div class="category-item" data-category="virtual">
+                <div class="category-icon">
+                    <i class="fas fa-video"></i>
+                </div>
+                <div class="category-name">Virtual</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="events-container" id="eventsContainer">
+        <!-- Event 1 -->
+        <div class="event-card" data-category="academic research">
+            <div class="event-image">Tech Hackathon 2025 Banner</div>
+            <div class="event-details">
+                <h3 class="event-title">Tech Hackathon 2025</h3>
+                <p class="event-date"><i class="far fa-calendar-alt"></i> March 15, 2025 - March 16, 2025</p>
+                <p class="event-location"><i class="fas fa-map-marker-alt"></i> IT Building, Main Campus</p>
+                <p class="event-description">A 24-hour coding challenge where students can showcase their skills, collaborate in teams, and develop innovative solutions to real-world problems. Prizes for top teams!</p>
+                <button class="interested-btn" data-event="Tech Hackathon 2025">I'm Interested</button>
+            </div>
+        </div>
+
+        <!-- Event 2 -->
+        <div class="event-card" data-category="academic virtual">
+            <div class="event-image">AI Workshop Series Banner</div>
+            <div class="event-details">
+                <h3 class="event-title">AI Workshop Series</h3>
+                <p class="event-date"><i class="far fa-calendar-alt"></i> Every Tuesday, March 18 - April 22, 2025</p>
+                <p class="event-location"><i class="fas fa-map-marker-alt"></i> Lab 302, IT Department</p>
+                <p class="event-description">A six-week workshop series covering the fundamentals of artificial intelligence, machine learning models, and practical applications. Perfect for beginners and intermediate learners.</p>
+                <button class="interested-btn" data-event="AI Workshop Series">I'm Interested</button>
+            </div>
+        </div>
+
+        <!-- Event 3 -->
+        <div class="event-card" data-category="career">
+            <div class="event-image">Industry Connect Symposium Banner</div>
+            <div class="event-details">
+                <h3 class="event-title">Industry Connect Symposium</h3>
+                <p class="event-date"><i class="far fa-calendar-alt"></i> April 5, 2025</p>
+                <p class="event-location"><i class="fas fa-map-marker-alt"></i> University Auditorium</p>
+                <p class="event-description">Connect with leading tech companies, explore internship and job opportunities, and listen to inspiring talks from industry experts. Networking session included.</p>
+                <button class="interested-btn" data-event="Industry Connect Symposium">I'm Interested</button>
+            </div>
+        </div>
+
+        <!-- Event 4 -->
+        <div class="event-card" data-category="social">
+            <div class="event-image">Tech Mixer Banner</div>
+            <div class="event-details">
+                <h3 class="event-title">IT Faculty Mixer</h3>
+                <p class="event-date"><i class="far fa-calendar-alt"></i> March 22, 2025</p>
+                <p class="event-location"><i class="fas fa-map-marker-alt"></i> Student Union, Main Campus</p>
+                <p class="event-description">An evening of networking and socializing with fellow IT students, faculty members, and alumni. Refreshments will be provided. Great opportunity to make connections in a relaxed setting.</p>
+                <button class="interested-btn" data-event="IT Faculty Mixer">I'm Interested</button>
+            </div>
+        </div>
+
+        <!-- Event 5 -->
+        <div class="event-card" data-category="arts">
+            <div class="event-image">Digital Art Exhibition Banner</div>
+            <div class="event-details">
+                <h3 class="event-title">Digital Art Exhibition</h3>
+                <p class="event-date"><i class="far fa-calendar-alt"></i> April 10-15, 2025</p>
+                <p class="event-location"><i class="fas fa-map-marker-alt"></i> University Gallery</p>
+                <p class="event-description">A showcase of digital artwork created by IT and fine arts students. Featuring digital paintings, 3D models, interactive installations, and more. Opening reception on April 10.</p>
+                <button class="interested-btn" data-event="Digital Art Exhibition">I'm Interested</button>
+            </div>
+        </div>
+
+        <!-- Event 6 -->
+        <div class="event-card" data-category="sports">
+            <div class="event-image">E-Sports Tournament Banner</div>
+            <div class="event-details">
+                <h3 class="event-title">IT Faculty E-Sports Tournament</h3>
+                <p class="event-date"><i class="far fa-calendar-alt"></i> March 29, 2025</p>
+                <p class="event-location"><i class="fas fa-map-marker-alt"></i> Game Lab, IT Building</p>
+                <p class="event-description">Compete in teams or individually in various e-sports categories. Games include League of Legends, Valorant, and Rocket League. Prizes for winners and refreshments provided.</p>
+                <button class="interested-btn" data-event="IT Faculty E-Sports Tournament">I'm Interested</button>
+            </div>
+        </div>
+
+        <!-- Event 7 -->
+        <div class="event-card" data-category="volunteer">
+            <div class="event-image">Code For Good Banner</div>
+            <div class="event-details">
+                <h3 class="event-title">Code For Good</h3>
+                <p class="event-date"><i class="far fa-calendar-alt"></i> April 8, 2025</p>
+                <p class="event-location"><i class="fas fa-map-marker-alt"></i> Community Center</p>
+                <p class="event-description">Volunteer your tech skills to help local non-profit organizations solve their technological challenges. A great opportunity to make a difference in your community while applying your knowledge.</p>
+                <button class="interested-btn" data-event="Code For Good">I'm Interested</button>
+            </div>
+        </div>
+
+        <!-- Event 8 -->
+        <div class="event-card" data-category="virtual research">
+          <div class="event-image">Research Symposium Banner</div>
+          <div class="event-details">
+              <h3 class="event-title">Undergraduate Research Symposium</h3>
+              <p class="event-date"><i class="far fa-calendar-alt"></i> April 20, 2025</p>
+              <p class="event-location"><i class="fas fa-map-marker-alt"></i> Virtual Event (Zoom)</p>
+              <p class="event-description">Present your research projects to faculty, peers, and industry professionals. A virtual event open to all IT undergraduates engaged in research. Registration required to present.</p>
+              <div class="event-buttons">
+                  <button class="interested-btn" data-event="Undergraduate Research Symposium">I'm Interested</button>
+                  <button class="more-info-btn" data-event="Undergraduate Research Symposium">More Information</button>
+              </div>
+          </div>
+      </div>
+
+    <!-- No Events Message -->
+    <div class="no-events" id="noEvents" style="display: none;">
+        <h3>No events found in this category</h3>
+        <p>Please check back later or select a different category</p>
+    </div>
+
+    <!-- Registration Modal -->
+    <div id="registrationModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 id="modalTitle">Register for Event</h2>
+            <form id="registrationForm" class="registration-form" action="https://api.web3forms.com/submit" method="POST">
+                <!-- Web3Forms Access Key -->
+                <input type="hidden" name="access_key" value="2c0131cc-3e35-45ca-841e-4f9c8256cff1">
+
+                <!-- Email Address (Change this to update the recipient email) -->
+                <input type="hidden" name="email" value="rojikaathapa88@gmail.com">
+                
+                <!-- Event Name -->
+                <input type="hidden" id="eventName" name="eventName">
+                
+                <div class="form-group">
+                    <label for="fullName">Full Name *</label>
+                    <input type="text" id="fullName" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Your Email Address *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Phone Number *</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="studentId">Student ID (if applicable)</label>
+                    <input type="text" id="studentId" name="studentId">
+                </div>
+                
+                <div class="form-group">
+                    <label for="comments">Comments or Questions</label>
+                    <textarea id="comments" name="message" rows="3"></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn" id="submitButton">Register</button>
+                
+                <div class="loading" id="loadingIndicator">
+                    <div class="loading-spinner"></div>
+                    <span>Processing your registration...</span>
+                </div>
+                
+                <div class="form-message success-message" id="successMessage">
+                    Registration successful! A confirmation has been sent to your email, and the organizer has been notified.
+                </div>
+                
+                <div class="form-message error-message" id="errorMessage">
+                    There was an error processing your registration. Please try again later.
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+       
+        // Get the modal
+        const modal = document.getElementById('registrationModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const eventNameInput = document.getElementById('eventName');
+        const registrationForm = document.getElementById('registrationForm');
+        const submitButton = document.getElementById('submitButton');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const successMessage = document.getElementById('successMessage');
+        const errorMessage = document.getElementById('errorMessage');
+        
+        // Get all "I'm Interested" buttons
+        const interestedButtons = document.querySelectorAll('.interested-btn');
+        
+        // Get the <span> element that closes the modal
+        const closeBtn = document.querySelector('.close-modal');
+        
+        // Event filtering variables
+        const categoryButtons = document.querySelectorAll('.category-btn');
+        const categoryItems = document.querySelectorAll('.category-item');
+        const eventCards = document.querySelectorAll('.event-card');
+        const eventsContainer = document.getElementById('eventsContainer');
+        const noEventsMessage = document.getElementById('noEvents');
+        const searchInput = document.getElementById('searchInput');
+        const searchButton = document.getElementById('searchButton');
+        
+        // Current filter state
+        let currentCategory = 'all';
+        let currentSearchQuery = '';
+        
+        // Filter events by category and search query
+        function filterEvents() {
+            let visibleEvents = 0;
+            
+            // Convert search query to lowercase for case-insensitive matching
+            const searchQuery = currentSearchQuery.toLowerCase();
+            
+            // Loop through all events
+            eventCards.forEach(card => {
+                const categories = card.getAttribute('data-category').split(' ');
+                
+                // Check if card matches category filter
+                const matchesCategory = currentCategory === 'all' || categories.includes(currentCategory);
+                
+                // Check if card matches search query
+                let matchesSearch = true;
+                if (searchQuery !== '') {
+                    const title = card.querySelector('.event-title').textContent.toLowerCase();
+                    const description = card.querySelector('.event-description').textContent.toLowerCase();
+                    const location = card.querySelector('.event-location').textContent.toLowerCase();
+                    
+                    matchesSearch = title.includes(searchQuery) || 
+                                   description.includes(searchQuery) || 
+                                   location.includes(searchQuery);
+                }
+                
+                // Show card if it matches both filters
+                if (matchesCategory && matchesSearch) {
+                    card.style.display = 'block';
+                    visibleEvents++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            // Show or hide the "No Events" message
+            if (visibleEvents === 0) {
+                noEventsMessage.style.display = 'block';
+            } else {
+                noEventsMessage.style.display = 'none';
+            }
+        }
+        
+        // Add event listeners to category buttons in navigation
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons
+                categoryButtons.forEach(btn => btn.classList.remove('active'));
+                
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                // Update current category and filter events
+                currentCategory = this.getAttribute('data-category');
+                filterEvents();
+            });
+        });
+        
+        // Add event listeners to category items in grid
+        categoryItems.forEach(item => {
+            item.addEventListener('click', function() {
+                const category = this.getAttribute('data-category');
+                
+                // Update current category
+                currentCategory = category;
+                
+                // Update navigation buttons to match selected category
+                categoryButtons.forEach(btn => {
+                    if (btn.getAttribute('data-category') === category) {
+                        btn.classList.add('active');
+                    } else {
+                        btn.classList.remove('active');
+                    }
+                });
+                
+                // Filter events
+                filterEvents();
+                
+                // Scroll to events section
+                document.getElementById('eventsContainer').scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+        
+        // Add event listener to search button
+        searchButton.addEventListener('click', function() {
+            currentSearchQuery = searchInput.value.trim();
+            filterEvents();
+        });
+        
+        // Add event listener for Enter key in search input
+        searchInput.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                currentSearchQuery = searchInput.value.trim();
+                filterEvents();
+            }
+        });
+        
+        // When the user clicks on an "I'm Interested" button, open the modal
+        interestedButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const eventName = this.getAttribute('data-event');
+                modalTitle.textContent = `Register for ${eventName}`;
+                eventNameInput.value = eventName;
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+            });
+        });
+        
+        // When the user clicks on (x), close the modal
+        closeBtn.addEventListener('click', function() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto'; // Re-enable scrolling
+        });
+        
+        // When the user clicks anywhere outside of the modal, close it
+        window.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto'; // Re-enable scrolling
+            }
+        });
+        
+        // Form submission handler
+        registrationForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show loading indicator
+            submitButton.disabled = true;
+            submitButton.style.opacity = '0.7';
+            loadingIndicator.style.display = 'block';
+            successMessage.style.display = 'none';
+            errorMessage.style.display = 'none';
+            
+            // Get form data
+            const formData = new FormData(registrationForm);
+            
+            // Submit form using Fetch API
+            fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Show success message
+                    successMessage.style.display = 'block';
+                    
+                    // Reset form
+                    registrationForm.reset();
+                    
+                    // Close modal after 3 seconds
+                    setTimeout(() => {
+                        modal.style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                        successMessage.style.display = 'none';
+                    }, 3000);
+                } else {
+                    // Show error message
+                    errorMessage.style.display = 'block';
+                }
+            })
+            .catch(error => {
+                // Show error message
+                errorMessage.style.display = 'block';
+            })
+            .finally(() => {
+                // Hide loading indicator
+                loadingIndicator.style.display = 'none';
+                submitButton.disabled = false;
+                submitButton.style.opacity = '1';
+            });
+        });
+        
+        // Initialize the page with all events visible
+        filterEvents();
+        const elementsToAnimate = document.querySelectorAll('.contact-card, .contact-form');
+            elementsToAnimate.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+            });
+            
+document.addEventListener('DOMContentLoaded', function() {
+    const moreInfoButtons = document.querySelectorAll('.more-info-btn');
+    
+    moreInfoButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const eventName = this.getAttribute('data-event');
+            localStorage.setItem('currentEvent', eventName);
+            window.open('feedback.html', '_blank');
+        });
+    });
+});
+    </script>
+    <script>
+    // User authentication/profile check for event.html
+    document.addEventListener('DOMContentLoaded', async function() {
+        const token = localStorage.getItem('token');
+        const header = document.querySelector('header');
+        if (!token) {
+            // Not logged in, redirect to login page
+            window.location.href = 'index.html';
+            return;
+        }
+        try {
+            const response = await fetch('http://localhost:3000/api/profile', {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            });
+            if (response.ok) {
+                const data = await response.json();
+                // Show welcome message with username/email
+                const welcome = document.createElement('div');
+                welcome.style.marginBottom = '1rem';
+                welcome.style.fontWeight = 'bold';
+                welcome.style.fontSize = '1.1rem';
+                welcome.textContent = `Welcome, ${data.username || 'User'}!`;
+                header.insertBefore(welcome, header.firstChild);
+            } else {
+                // Invalid/expired token, redirect to login
+                localStorage.removeItem('token');
+                window.location.href = 'index.html';
+            }
+        } catch (err) {
+            // Error connecting to backend, redirect to login
+            localStorage.removeItem('token');
+            window.location.href = 'index.html';
+        }
+    });
+    </script>
+</body>
+</html>
